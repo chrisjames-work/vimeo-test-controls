@@ -7,6 +7,7 @@ const PlayerComponent = ({
   description,
   duration,
   height,
+  id,
   link,
   name,
   setNextVideo,
@@ -25,6 +26,7 @@ const PlayerComponent = ({
         controls: false,
         height,
         responsive: true,
+        texttrack: "en",
         url: link,
         volume: volume.current,
         width,
@@ -39,7 +41,7 @@ const PlayerComponent = ({
         setNextVideo();
       });
     } else {
-      player.current.loadVideo(563568179).then(() => {
+      player.current.loadVideo(id).then(() => {
         player.current.play();
       });
     }
@@ -51,7 +53,7 @@ const PlayerComponent = ({
     return {
       // off
     };
-  }, [height, link, setNextVideo, width]);
+  }, [height, id, link, setNextVideo, width]);
 
   const handlePlayToggle = () => {
     if (isPaused.current) {

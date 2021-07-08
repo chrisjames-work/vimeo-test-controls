@@ -26,7 +26,11 @@ function App() {
 
   return (
     <div className="App">
-      <Player {...playlist[video].video} setNextVideo={setNextVideo} />
+      <Player
+        {...playlist[video].video}
+        id={playlist[video].id}
+        setNextVideo={setNextVideo}
+      />
     </div>
   );
 }
