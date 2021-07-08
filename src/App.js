@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import Player from "./components/player";
+import video1 from "./data/cc-video";
+import video2 from "./data/video";
+
+const playlist = [
+  {
+    id: 76979871,
+    video: video1,
+  },
+  {
+    id: 563568179,
+    video: video2,
+  },
+];
 
 function App() {
+  const [video, setVideo] = useState(0);
+
+  const setNextVideo = () => {
+    if (video < playlist.length - 1) {
+      setVideo(video + 1);
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Player {...playlist[video].video} setNextVideo={setNextVideo} />
     </div>
   );
 }
