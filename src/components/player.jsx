@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Player from "@vimeo/player";
 
 import "./index.css";
@@ -19,6 +19,7 @@ const PlayerComponent = ({
   const isPaused = useRef(true);
   const hasTrack = useRef(true);
   const volume = useRef(0.5);
+  const [track, setTrack] = useState();
 
   useEffect(() => {
     if (!player.current) {
@@ -34,6 +35,11 @@ const PlayerComponent = ({
 
       player.current.on("play", function () {
         console.log("Played the video");
+      });
+
+      player.current.on("cuechange", function (data) {
+        console.log(data);
+        setTrack(data.cues[0].html);
       });
 
       player.current.on("ended", function (data) {
@@ -100,13 +106,13 @@ const PlayerComponent = ({
   // Unmount on video end? (hide the rec screen). Look for next queued video.
 
   return (
-    <div class="wrapper">
-      <div class="playerWrapper" id="playerWrapper"></div>
-      <div class="controlsWrapper">
-        <ul class="controlsList">
+    <div className="wrapper">
+      <div className="playerWrapper" id="playerWrapper"></div>
+      <div className="controlsWrapper">
+        <ul className="controlsList">
           <li>
             <button
-              class="controlsButton"
+              className="controlsButton"
               type="button"
               onClick={handleMuteToggle}
             >
@@ -123,18 +129,27 @@ const PlayerComponent = ({
             </button>
           </li>
           <li>
-            <button class="controlsButton" type="button" onClick={() => false}>
+            <button
+              className="controlsButton"
+              type="button"
+              onClick={() => false}
+            >
               Now
             </button>
           </li>
           <li>
-            <button class="controlsButton" type="button" onClick={() => false}>
+            <button
+              className="controlsButton"
+              type="button"
+              onClick={() => false}
+            >
               Rooms
             </button>
           </li>
         </ul>
       </div>
-      <div>{name}</div>
+      {/* <div>{name}</div> */}
+      <div className="track" dangerouslySetInnerHTML={{ __html: track }}></div>
       <button onClick={handlePlayToggle} type="button" class="playButton">
         Play/Pause
       </button>
